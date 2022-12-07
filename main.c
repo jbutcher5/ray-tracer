@@ -39,13 +39,8 @@ void FreeImage(Image *img) {
 int main() {
   pm_init("Ray Tracer", 0);
 
-  Vector3 v = {1.f, 3.f, 5.f};
-
-  char *v_debug = Vector3Debug(&v);
-  printf("%s\n", v_debug);
-  free(v_debug);
-
-  pixel **pixel_array = ppm_allocarray(128, 128);
+  Image *img = InitImage(128, 128);
+  WriteImage(img, "out.ppm");
 
   return 0;
 }
