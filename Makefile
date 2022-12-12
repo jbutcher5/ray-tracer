@@ -1,11 +1,11 @@
-SRC = main.c objects.c math_utils.c
-OBJ = ${SRC:.c=.o}
+SRC = main.cpp math_utils.cpp vector.cpp
+OBJ = ${SRC:.cpp=.o}
 
 %.o: %.c
-	clang -c -g $< -o $@
+	clang++ -c -g $< -o $@
 
 ray-tracer: ${OBJ}
-	clang $^ -lnetpbm -lm -o $@
+	clang++ $^ -lnetpbm -lm -o $@
 
 format: ${SRC}
 	clang-format $^ -i

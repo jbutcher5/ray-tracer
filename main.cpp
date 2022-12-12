@@ -1,4 +1,4 @@
-#include "objects.h"
+#include "objects.hpp"
 #include <netpbm/pm.h>
 #include <netpbm/ppm.h>
 #include <stdio.h>
@@ -18,9 +18,9 @@ Image *InitImage(const int columns, const int rows) {
   Image *img = (Image *)malloc(sizeof(Image));
 
   *img = (Image){
-      .columns = columns,
-      .rows = rows,
-      .pixels = ppm_allocarray(columns, rows),
+      ppm_allocarray(columns, rows),
+      columns,
+      rows,
   };
 
   return img;
