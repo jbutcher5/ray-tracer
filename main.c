@@ -1,13 +1,8 @@
-#include "vector.h"
+#include "objects.h"
 #include <netpbm/pm.h>
 #include <netpbm/ppm.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-typedef struct {
-  Vector3 position;
-  Vector3 direction;
-} Ray;
 
 typedef struct {
   pixel **pixels;

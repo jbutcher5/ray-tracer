@@ -1,4 +1,4 @@
-SRC = main.c vector.c
+SRC = main.c objects.c math_utils.c
 OBJ = ${SRC:.c=.o}
 
 %.o: %.c
