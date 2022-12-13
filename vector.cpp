@@ -3,20 +3,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-Vector3 Vector3Add(Vector3 v1, Vector3 v2) {
-  return (Vector3){.x = v1.x + v2.x, .y = v1.y + v2.y, .z = v1.z + v2.z};
-}
+Vector3 Vector3::Add(Vector3 v) { return Vector3(x + v.x, y + v.y, z + v.z); }
 
-float Vector3DotProduct(Vector3 v1, Vector3 v2) {
-  return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-}
+Vector3 Vector3::Sub(Vector3 v) { return Vector3(x - v.x, y - v.y, z - v.z); }
 
-float Vector3Length(Vector3 v) {
-  return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
-}
+float Vector3::Dot(Vector3 v) { return x * v.x + y * v.y + z * v.z; }
 
-char *Vector3Debug(Vector3 *v) {
+float Vector3::Length() { return sqrtf(x * x + y * y + z * z); }
+
+char *Vector3::Debug() {
   char *buffer = (char *)malloc(128 * sizeof(char));
-  sprintf(buffer, "%f %f %f", v->x, v->y, v->z);
+  sprintf(buffer, "%f %f %f", x, y, z);
   return buffer;
 }

@@ -5,5 +5,6 @@
 class Sphere : public Object {
 public:
   float radius;
-  bool hit(Ray ray, HitRecord *record) { return false; }
+  Sphere(Vector3 p, float r) : Object(p) { radius = r; }
+  bool hit(Ray ray, HitRecord *record);
 };

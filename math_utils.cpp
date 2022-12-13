@@ -1,3 +1,4 @@
+#include "math_utils.hpp"
 #include <math.h>
 
 void SolveQuadratic(float a, float b, float c, float *x1, float *x2) {

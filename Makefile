@@ -1,4 +1,4 @@
-SRC = main.cpp math_utils.cpp vector.cpp
+SRC = main.cpp math_utils.cpp vector.cpp objects.cpp
 OBJ = ${SRC:.cpp=.o}
 
 %.o: %.c
