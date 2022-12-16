@@ -13,7 +13,10 @@ bool Sphere::hit(Ray ray, HitRecord *record) {
 
   SolveQuadratic(a, b, c, &x1, &x2);
 
-  printf("%f %f\n", x1, x2);
+  Vector3 intersection = ray.At(x2);
+
+  printf("%f %f (%f %f %f)\n", x1, x2, intersection.x, intersection.y,
+         intersection.z);
 
   return true;
 }
