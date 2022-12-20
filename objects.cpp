@@ -1,4 +1,5 @@
 #include "objects.hpp"
+#include "math.h"
 #include "math_utils.hpp"
 #include "stdio.h"
 
@@ -13,10 +14,13 @@ bool Sphere::hit(Ray ray, HitRecord *record) {
 
   SolveQuadratic(a, b, c, &x1, &x2);
 
+  if (isnan(x2))
+    return false;
+
   Vector3 intersection = ray.At(x2);
 
-  printf("%f %f (%f %f %f)\n", x1, x2, intersection.x, intersection.y,
-         intersection.z);
+  record->intersection = intersection;
+  record->obj = this;
 
   return true;
 }
