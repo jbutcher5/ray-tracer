@@ -8,13 +8,11 @@ public:
   Vector3 position;
   Vector3 direction;
   Ray(Vector3 pos, Vector3 dir) : position(pos), direction(dir) {}
-  Vector3 At(float t) {
-    return position.Add(direction.Mul(t));
-  }
+  Vector3 At(float t) { return position.Add(direction.Mul(t)); }
 };
 
 struct HitRecord {
-  Vector3 position;
+  Vector3 intersection;
   Object *obj;
 };
 

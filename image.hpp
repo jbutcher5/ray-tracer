@@ -3,13 +3,12 @@
 #include <string>
 
 class Image {
-private:
-  pixel **pixels;
+public:
+  const std::string file_path;
   const int columns;
   const int rows;
-  const std::string file_path;
+  pixel **pixels;
 
-public:
   Image(const std::string fp, const int cols, const int rows)
       : columns(cols), rows(rows), file_path(fp) {
     pixels = ppm_allocarray(cols, rows);
