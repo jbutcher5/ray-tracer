@@ -1,7 +1,6 @@
 #include "objects.hpp"
 #include "math.h"
 #include "math_utils.hpp"
-#include "stdio.h"
 
 bool Sphere::hit(Ray ray, HitRecord *record) {
   Vector3 origin = ray.position.Sub(position);
@@ -19,6 +18,7 @@ bool Sphere::hit(Ray ray, HitRecord *record) {
 
   Vector3 intersection = ray.At(x2);
 
+  record->t = x2;
   record->intersection = intersection;
   record->obj = this;
 

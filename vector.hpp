@@ -13,6 +13,8 @@ public:
   Vector3 Add(Vector3 v);
   Vector3 Sub(Vector3 v);
   Vector3 Mul(float k);
+  Vector3 Div(float k);
+  Vector3 Normalize();
   float Dot(Vector3 v);
   float Length();
   char *Debug();

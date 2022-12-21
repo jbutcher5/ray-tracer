@@ -1,23 +1,36 @@
 #include "camera.hpp"
-#include "core.hpp"
 #include "objects.hpp"
-#include <cstdio>
 #include <netpbm/ppm.h>
 
-void Camera::DrawScene(Sphere *s) {
+void Camera::DrawScene() {
   for (int j = img.rows - 1; j >= 0; --j) {
     for (int i = 0; i < img.columns; i++) {
       float u = (float)i / (img.columns - 1);
       float v = (float)j / (img.rows - 1);
       Ray ray = Ray(position, bottom_left_corner.Add(horizontal.Mul(u))
                                   .Add(vertical.Mul(v))
-                                  .Sub(position));
+                                  .Sub(position)
+                                  .Normalize());
 
-      HitRecord record = {Vector3(0.f, 0.f, 0.f), nullptr};
+      HitRecord record = {0, Vector3(0.f, 0.f, 0.f), nullptr};
+      bool does_hit = false;
 
-      if (s->hit(ray, &record)) {
-        Vector3 normal = record.intersection.Sub(record.obj->position);
-        normal = normal.Mul((float)1 / 3);
+      for (Object *obj : scene) {
+        HitRecord tmp_record = {0, Vector3(0.f, 0.f, 0.f), nullptr};
+        if (obj->hit(ray, &tmp_record)) {
+
+          if (!does_hit) {
+            does_hit = true;
+            record = tmp_record;
+          } else if (fabs(tmp_record.t) < fabs(record.t)) {
+            record = tmp_record;
+          }
+        }
+      }
+
+      if (does_hit) {
+        Vector3 normal =
+            record.intersection.Sub(record.obj->position).Normalize();
         pixel p = {(pixval)abs((int)(normal.x * 255)),
                    (pixval)abs((int)(normal.y * 255)),
                    (pixval)abs((int)(normal.z * 255))};

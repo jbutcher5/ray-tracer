@@ -1,9 +1,9 @@
 #pragma once
 
-#include "core.hpp"
 #include "image.hpp"
 #include "objects.hpp"
 #include "vector.hpp"
+#include <vector>
 
 class Camera {
   float aspect_ratio;
@@ -19,6 +19,8 @@ class Camera {
 
   Vector3 bottom_left_corner;
 
+  std::vector<Object *> scene;
+
 public:
   Camera(const std::string fp, const int cols, const int rows)
       : img(Image(fp, cols, rows)), position(Vector3(0.f, 0.f, 0.f)),
@@ -29,6 +31,7 @@ public:
         bottom_left_corner(position.Sub(horizontal.Mul(0.5f))
                                .Sub(vertical.Mul(0.5f))
                                .Sub(Vector3(0.f, 0.f, focal_length))) {}
-  void DrawScene(Sphere *s);
+  void DrawScene();
   void WriteImage() { img.WriteImage(); }
+  void AddObject(Object *obj) { scene.push_back(obj); }
 };
