@@ -1,24 +1,25 @@
 #include "objects.hpp"
 #include "math.h"
 #include "math_utils.hpp"
+#include <cmath>
 
 bool Sphere::hit(Ray ray, HitRecord *record) {
   Vector3 origin = ray.position.Sub(position);
 
-  float a = ray.direction.Dot(ray.direction);
-  float b = 2.f * origin.Dot(ray.direction);
+  float a = std::pow(ray.direction.Length(), 2);
+  float b = origin.Dot(ray.direction);
   float c = origin.Dot(origin) - radius * radius;
 
-  float x1, x2;
+  float discriminant = b * b - a * c;
 
-  SolveQuadratic(a, b, c, &x1, &x2);
-
-  if (isnan(x2))
+  if (discriminant < 0)
     return false;
 
-  Vector3 intersection = ray.At(x2);
+  float t = -b - std::sqrt(discriminant);
 
-  record->t = x2;
+  Vector3 intersection = ray.At(t);
+
+  record->t = t;
   record->intersection = intersection;
   record->obj = this;
 

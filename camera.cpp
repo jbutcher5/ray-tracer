@@ -3,7 +3,7 @@
 #include <netpbm/ppm.h>
 
 void Camera::DrawScene() {
-  for (int j = img.rows - 1; j >= 0; --j) {
+  for (int j = 0; j < img.rows; j++)
     for (int i = 0; i < img.columns; i++) {
       float u = (float)i / (img.columns - 1);
       float v = (float)j / (img.rows - 1);
@@ -31,6 +31,7 @@ void Camera::DrawScene() {
       if (does_hit) {
         Vector3 normal =
             record.intersection.Sub(record.obj->position).Normalize();
+
         pixel p = {(pixval)abs((int)(normal.x * 255)),
                    (pixval)abs((int)(normal.y * 255)),
                    (pixval)abs((int)(normal.z * 255))};
@@ -38,5 +39,4 @@ void Camera::DrawScene() {
         img.pixels[j][i] = p;
       }
     }
-  }
 }
