@@ -2,22 +2,32 @@
 #include "math.h"
 #include "math_utils.hpp"
 #include <cmath>
+#include <cstdio>
 
 bool Sphere::hit(Ray ray, HitRecord *record) {
   Vector3 origin = ray.position.Sub(position);
 
   float a = std::pow(ray.direction.Length(), 2);
   float b = origin.Dot(ray.direction);
-  float c = origin.Dot(origin) - radius * radius;
+  float c = std::pow(origin.Length(), 2) - radius * radius;
 
   float discriminant = b * b - a * c;
 
   if (discriminant < 0)
     return false;
 
-  float t = -b - std::sqrt(discriminant);
+  float x1 = (-b - std::sqrt(discriminant)) / a;
+  float x2 = (-b + std::sqrt(discriminant)) / a;
+
+  float t = x1;
+
+  if (std::abs(x2) < std::abs(x1))
+    t = x2;
 
   Vector3 intersection = ray.At(t);
+
+  if (t > 0)
+    return false;
 
   record->t = t;
   record->intersection = intersection;

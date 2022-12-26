@@ -13,10 +13,10 @@ int main() {
 
   pm_init(prog_name.c_str(), 0);
 
-  World world = World(fp, 960, 540);
+  World world = World(fp, 960, 540, 1);
 
-  Sphere s = Sphere(Vector3(0.f, 0.f, 5.f), 3.f);
-  Sphere s2 = Sphere(Vector3(5.f, 0.f, 20.f), 15.f);
+  Sphere s = Sphere(Vector3(9.f, 0.f, 19.f), 4.f);
+  Sphere s2 = Sphere(Vector3(0.f, -103.f, 1.f), 100.f);
 
   world.AddObject(&s);
   world.AddObject(&s2);

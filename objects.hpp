@@ -1,5 +1,6 @@
 #pragma once
 #include "vector.hpp"
+#include <netpbm/ppm.h>
 
 class Object;
 
@@ -19,6 +20,7 @@ struct HitRecord {
 
 class Object {
 public:
+  pixel colour = {255, 0, 0};
   Vector3 position = Vector3(0.f, 0.f, 0.f);
   Object(Vector3 p) { position = p; };
   virtual bool hit(Ray ray, HitRecord *record) = 0;
