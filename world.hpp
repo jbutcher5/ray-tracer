@@ -5,7 +5,7 @@
 #include "vector.hpp"
 #include <vector>
 
-class Camera {
+class World {
   float aspect_ratio;
   int samples_per_pixel;
   Image img;
@@ -23,7 +23,7 @@ class Camera {
   std::vector<Object *> scene;
 
 public:
-  Camera(const std::string fp, const int cols, const int rows)
+  World(const std::string fp, const int cols, const int rows)
       : img(Image(fp, cols, rows)), samples_per_pixel(50),
         position(Vector3(0.f, 0.f, 0.f)), aspect_ratio((float)cols / rows),
         viewport_height(2.f), viewport_width(aspect_ratio * viewport_height),
@@ -35,4 +35,5 @@ public:
   void DrawScene();
   void WriteImage() { img.WriteImage(); }
   void AddObject(Object *obj) { scene.push_back(obj); }
+  pixel GetColour(int pixel_row, int pixel_col);
 };

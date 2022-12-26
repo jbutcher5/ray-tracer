@@ -1,9 +1,11 @@
-#include "camera.hpp"
 #include "objects.hpp"
+#include "world.hpp"
 #include <cmath>
 #include <netpbm/ppm.h>
 
-void Camera::DrawScene() {
+pixel get_colour(Ray r, )
+
+    void World::DrawScene() {
   pixel *pixel_colour = (pixel *)malloc(sizeof(pixel) * samples_per_pixel);
 
   int pixel_side_length = std::sqrt(samples_per_pixel);
@@ -30,7 +32,6 @@ void Camera::DrawScene() {
           for (Object *obj : scene) {
             HitRecord tmp_record = {0, Vector3(0.f, 0.f, 0.f), nullptr};
             if (obj->hit(ray, &tmp_record)) {
-
               if (!does_hit) {
                 does_hit = true;
                 record = tmp_record;

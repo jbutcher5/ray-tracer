@@ -15,6 +15,7 @@ public:
   Vector3 Mul(float k);
   Vector3 Div(float k);
   Vector3 Normalize();
+  static Vector3 Random(float min, float max);
   float Dot(Vector3 v);
   float Length();
   char *Debug();
