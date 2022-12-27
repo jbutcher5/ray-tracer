@@ -74,9 +74,8 @@ pixel World::GetColour(Ray r, int depth) {
     // colour.g /= 2;
     // colour.b /= 2;
 
-    pixel p = {(pixval)abs((int)(normal.x * 255)),
-               (pixval)abs((int)(normal.y * 255)),
-               (pixval)abs((int)(normal.z * 255))};
+    pixel p = {(pixval)((normal.x + 1) * 128), (pixval)((normal.y + 1) * 128),
+               (pixval)((normal.z + 1) * 128)};
 
     return p;
   }
