@@ -36,7 +36,7 @@ public:
   void DrawScene();
   void WriteImage() { img.WriteImage(); }
   void AddObject(Object *obj) { scene.push_back(obj); }
-  pixel PixelColour(int pixel_row, int pixel_col);
-  pixel GetColour(Ray r, int depth);
-  pixel GetColour(Ray r);
+  Colour PixelColour(int pixel_row, int pixel_col);
+  Colour GetColour(Ray r, int depth);
+  Colour GetColour(Ray r);
 };

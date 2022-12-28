@@ -14,6 +14,7 @@ public:
 
 struct HitRecord {
   float t;
+  Vector3 normal;
   Vector3 intersection;
   Object *obj;
 };

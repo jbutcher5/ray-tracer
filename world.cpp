@@ -1,19 +1,20 @@
 #include "world.hpp"
+#include "image.hpp"
 #include "objects.hpp"
+#include "vector.hpp"
 #include <cmath>
-#include <cstdio>
 #include <netpbm/ppm.h>
 
 void World::DrawScene() {
   for (int pixel_col = 0; pixel_col < img.columns; pixel_col++)
     for (int pixel_row = 0; pixel_row < img.rows; pixel_row++) {
-      pixel p = PixelColour(pixel_col, pixel_row);
-      img.pixels[pixel_row][pixel_col] = p;
+      Colour colour = PixelColour(pixel_col, pixel_row);
+      img.SetPixel(pixel_row, pixel_col, colour);
     }
 }
 
-pixel World::PixelColour(int pixel_col, int pixel_row) {
-  pixel buffer = ppm_blackpixel();
+Colour World::PixelColour(int pixel_col, int pixel_row) {
+  Colour buffer = Colour::Black();
 
   int pixel_side_length = std::sqrt(samples_per_pixel);
 
@@ -28,11 +29,11 @@ pixel World::PixelColour(int pixel_col, int pixel_row) {
                                   .Add(vertical.Mul(v))
                                   .Sub(position));
 
-      pixel p = GetColour(ray);
+      Colour colour = GetColour(ray);
 
-      buffer.r += p.r;
-      buffer.g += p.g;
-      buffer.b += p.b;
+      buffer.r += colour.r;
+      buffer.g += colour.g;
+      buffer.b += colour.b;
     }
 
   buffer.r /= samples_per_pixel;
@@ -42,17 +43,19 @@ pixel World::PixelColour(int pixel_col, int pixel_row) {
   return buffer;
 }
 
-pixel World::GetColour(Ray r) { return GetColour(r, 0); }
+Colour World::GetColour(Ray r) { return GetColour(r, 0); }
 
-pixel World::GetColour(Ray r, int depth) {
+Colour World::GetColour(Ray r, int depth) {
   if (depth > 50)
-    return {0, 0, 0};
+    return Colour::Black();
 
-  HitRecord record = {0, Vector3(0.f, 0.f, 0.f), nullptr};
+  HitRecord record = {0, Vector3(0.f, 0.f, 0.f), Vector3(0.f, 0.f, 0.f),
+                      nullptr};
   bool does_hit = false;
 
   for (Object *obj : scene) {
-    HitRecord tmp_record = {0, Vector3(0.f, 0.f, 0.f), nullptr};
+    HitRecord tmp_record = {0, Vector3(0.f, 0.f, 0.f), Vector3(0.f, 0.f, 0.f),
+                            nullptr};
     if (obj->hit(r, &tmp_record)) {
       if (!does_hit) {
         does_hit = true;
@@ -64,21 +67,14 @@ pixel World::GetColour(Ray r, int depth) {
   }
 
   if (does_hit) {
-    Vector3 normal = record.intersection.Sub(record.obj->position).Normalize();
 
-    // Ray r2 = Ray(record.intersection,
-    // normal.Add(Vector3::Random(-1.f, 1.f)));
+    Vector3 normal = record.normal.Normalize();
 
-    // pixel colour = GetColour(r2, depth + 1);
-    // colour.r /= 2;
-    // colour.g /= 2;
-    // colour.b /= 2;
+    Colour colour = {(double)((normal.x + 1) / 2), (double)((normal.y + 1) / 2),
+                     (double)((normal.z + 1) / 2)};
 
-    pixel p = {(pixval)((normal.x + 1) * 128), (pixval)((normal.y + 1) * 128),
-               (pixval)((normal.z + 1) * 128)};
-
-    return p;
+    return colour;
   }
 
-  return {0, 0, 0};
+  return Colour((pixel){20, 50, 200});
 }

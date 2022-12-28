@@ -2,7 +2,6 @@
 #include "math.h"
 #include "math_utils.hpp"
 #include <cmath>
-#include <cstdio>
 
 bool Sphere::hit(Ray ray, HitRecord *record) {
   Vector3 origin = ray.position.Sub(position);
@@ -32,6 +31,7 @@ bool Sphere::hit(Ray ray, HitRecord *record) {
   record->t = t;
   record->intersection = intersection;
   record->obj = this;
+  record->normal = intersection.Sub(position).Normalize();
 
   return true;
 }
