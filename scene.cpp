@@ -1,11 +1,11 @@
-#include "world.hpp"
+#include "scene.hpp"
 #include "image.hpp"
 #include "objects.hpp"
 #include "vector.hpp"
 #include <cmath>
 #include <netpbm/ppm.h>
 
-void World::DrawScene() {
+void Scene::DrawScene() {
   for (int pixel_col = 0; pixel_col < img.columns; pixel_col++)
     for (int pixel_row = 0; pixel_row < img.rows; pixel_row++) {
       Colour colour = PixelColour(pixel_col, pixel_row);
@@ -13,7 +13,7 @@ void World::DrawScene() {
     }
 }
 
-Colour World::PixelColour(int pixel_col, int pixel_row) {
+Colour Scene::PixelColour(int pixel_col, int pixel_row) {
   Colour buffer = Colour::Black();
 
   int pixel_side_length = std::sqrt(samples_per_pixel);
@@ -43,9 +43,9 @@ Colour World::PixelColour(int pixel_col, int pixel_row) {
   return buffer;
 }
 
-Colour World::GetColour(Ray r) { return GetColour(r, 0); }
+Colour Scene::GetColour(Ray r) { return GetColour(r, 0); }
 
-Colour World::GetColour(Ray r, int depth) {
+Colour Scene::GetColour(Ray r, int depth) {
   if (depth > 50)
     return Colour::Black();
 

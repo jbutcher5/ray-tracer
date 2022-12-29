@@ -5,7 +5,7 @@
 #include "vector.hpp"
 #include <vector>
 
-class World {
+class Scene {
   float aspect_ratio;
   int samples_per_pixel;
   Image img;
@@ -23,7 +23,7 @@ class World {
   std::vector<Object *> scene;
 
 public:
-  World(const std::string fp, const int cols, const int rows,
+  Scene(const std::string fp, const int cols, const int rows,
         const int samples_per_pixel)
       : img(Image(fp, cols, rows)), samples_per_pixel(samples_per_pixel),
         position(Vector3(0.f, 0.f, 0.f)), aspect_ratio((float)cols / rows),
