@@ -8,15 +8,19 @@ class Ray {
 public:
   Vector3 position;
   Vector3 direction;
+  Ray() {}
   Ray(Vector3 pos, Vector3 dir) : position(pos), direction(dir) {}
   Vector3 At(float t) { return position.Add(direction.Mul(t)); }
 };
 
-struct HitRecord {
+class HitRecord {
+public:
   float t;
   Vector3 normal;
   Vector3 intersection;
   Object *obj;
+  Ray r;
+  HitRecord() {}
 };
 
 class Object {
