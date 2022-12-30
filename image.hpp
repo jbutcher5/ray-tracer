@@ -20,6 +20,7 @@ public:
   Colour Mul(Colour c) { return Colour(c.r * r, c.g * g, c.b * b); }
   Colour Mul(double k) { return Colour(k * r, k * g, k * b); }
   Colour Add(Colour c) { return Colour(c.r + r, c.g + g, c.b + b); }
+  Colour Clamp();
 };
 
 class Image {
@@ -35,9 +36,6 @@ public:
     pixels = ppm_allocarray(cols, rows);
   }
   ~Image() { ppm_freearray(pixels, rows); }
-
   void WriteImage();
-  void SetPixel(int row, int col, Colour colour) {
-    pixels[row][col] = colour.ToPixel();
-  };
+  void SetPixel(int row, int col, Colour colour, int samples_per_pixel);
 };

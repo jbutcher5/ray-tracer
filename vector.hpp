@@ -19,5 +19,6 @@ public:
   static Vector3 Random(float min, float max);
   float Dot(Vector3 v);
   float Length();
+  float LengthSquared();
   char *Debug();
 };

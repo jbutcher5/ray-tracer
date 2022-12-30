@@ -1,5 +1,4 @@
 #include "vector.hpp"
-#include <bits/types/time_t.h>
 #include <cstdlib>
 #include <math.h>
 #include <stdio.h>
@@ -33,7 +32,9 @@ Vector3 Vector3::Random(float min, float max) {
 
 float Vector3::Dot(Vector3 v) { return x * v.x + y * v.y + z * v.z; }
 
-float Vector3::Length() { return sqrtf(x * x + y * y + z * z); }
+float Vector3::Length() { return std::sqrt(LengthSquared()); }
+
+float Vector3::LengthSquared() { return x * x + y * y + z * z; }
 
 char *Vector3::Debug() {
   char *buffer = (char *)malloc(128 * sizeof(char));

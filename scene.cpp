@@ -5,6 +5,17 @@
 #include <cmath>
 #include <netpbm/ppm.h>
 
+#define MAX_RAY_DEPTH 50
+
+Vector3 RandomInUnitSphere() {
+  while (true) {
+    Vector3 v = Vector3::Random(-1, 1);
+    if (v.LengthSquared() >= 1)
+      continue;
+    return v;
+  }
+}
+
 Scene::Scene(const std::string fp, const int cols, const int rows,
              const int samples_per_pixel)
     : img(Image(fp, cols, rows)) {
@@ -31,7 +42,7 @@ void Scene::DrawScene() {
   for (int pixel_col = 0; pixel_col < img.columns; pixel_col++)
     for (int pixel_row = 0; pixel_row < img.rows; pixel_row++) {
       Colour colour = PixelColour(pixel_col, pixel_row);
-      img.SetPixel(pixel_row, pixel_col, colour);
+      img.SetPixel(pixel_row, pixel_col, colour, samples_per_pixel);
     }
 }
 
@@ -59,17 +70,13 @@ Colour Scene::PixelColour(int pixel_col, int pixel_row) {
       buffer.b += colour.b;
     }
 
-  buffer.r /= samples_per_pixel;
-  buffer.g /= samples_per_pixel;
-  buffer.b /= samples_per_pixel;
-
   return buffer;
 }
 
 Colour Scene::GetColour(Ray r) { return GetColour(r, 0); }
 
 Colour Scene::GetColour(Ray r, int depth) {
-  if (depth > 50)
+  if (depth > MAX_RAY_DEPTH)
     return Colour::Black();
 
   HitRecord record = {0, Vector3(0.f, 0.f, 0.f), Vector3(0.f, 0.f, 0.f),
@@ -90,11 +97,13 @@ Colour Scene::GetColour(Ray r, int depth) {
   }
 
   if (does_hit) {
+    Vector3 target = record.intersection.Add(record.normal)
+                         .Add(RandomInUnitSphere().Normalize());
 
-    Vector3 normal = record.normal.Normalize();
-
-    Colour colour = {(double)((normal.x + 1) / 2), (double)((normal.y + 1) / 2),
-                     (double)((normal.z + 1) / 2)};
+    Colour colour =
+        GetColour(Ray(record.intersection, target.Sub(record.intersection)),
+                  depth + 1)
+            .Mul(0.5);
 
     return colour;
   }

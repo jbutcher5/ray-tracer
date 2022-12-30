@@ -12,7 +12,7 @@ int main() {
 
   pm_init(prog_name.c_str(), 0);
 
-  Scene scene = Scene(fp, 960, 540, 1);
+  Scene scene = Scene(fp, 960, 540, 16);
 
   Sphere s = Sphere(Vector3(0.f, 0.f, -12.f), 3.f);
   Sphere s2 = Sphere(Vector3(0.f, -103.f, -12.f), 100.f);
