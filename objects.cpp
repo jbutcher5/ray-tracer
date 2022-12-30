@@ -25,7 +25,7 @@ bool Sphere::hit(Ray ray, HitRecord *record) {
 
   Vector3 intersection = ray.At(t);
 
-  if (t > 0)
+  if (t < 0)
     return false;
 
   record->t = t;

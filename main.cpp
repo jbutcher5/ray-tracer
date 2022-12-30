@@ -14,8 +14,8 @@ int main() {
 
   Scene scene = Scene(fp, 960, 540, 1);
 
-  Sphere s = Sphere(Vector3(0.f, 0.f, 12.f), 3.f);
-  Sphere s2 = Sphere(Vector3(0.f, -103.f, 12.f), 100.f);
+  Sphere s = Sphere(Vector3(0.f, 0.f, -12.f), 3.f);
+  Sphere s2 = Sphere(Vector3(0.f, -103.f, -12.f), 100.f);
 
   scene.AddObject(&s);
   scene.AddObject(&s2);

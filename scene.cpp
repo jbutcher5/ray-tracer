@@ -5,6 +5,28 @@
 #include <cmath>
 #include <netpbm/ppm.h>
 
+Scene::Scene(const std::string fp, const int cols, const int rows,
+             const int samples_per_pixel)
+    : img(Image(fp, cols, rows)) {
+  this->samples_per_pixel = samples_per_pixel;
+  aspect_ratio = (float)cols / rows;
+  viewport_height = 2.f;
+  viewport_width = aspect_ratio * viewport_height;
+  focal_length = 1.8f;
+  horizontal = Vector3(viewport_width, 0.f, 0.f);
+  vertical = Vector3(0.f, viewport_height, 0.f);
+  bottom_left_corner = position.Sub(horizontal.Div(2))
+                           .Sub(vertical.Div(2))
+                           .Sub(Vector3(0.f, 0.f, focal_length));
+}
+
+Colour Scene::SkyColour(Ray r) {
+  Vector3 dir = r.direction.Normalize();
+  float t = 0.5 * (dir.y + 1);
+
+  return Colour::White().Mul(1 - t).Add(Colour(0.5, 0.7, 1.0).Mul(t));
+}
+
 void Scene::DrawScene() {
   for (int pixel_col = 0; pixel_col < img.columns; pixel_col++)
     for (int pixel_row = 0; pixel_row < img.rows; pixel_row++) {
@@ -23,7 +45,8 @@ Colour Scene::PixelColour(int pixel_col, int pixel_row) {
       float u = ((float)pixel_col + ((float)i / pixel_side_length)) /
                 (img.columns - 1);
       float v =
-          ((float)pixel_row + ((float)j / pixel_side_length)) / (img.rows - 1);
+          ((float)(img.rows - pixel_row) + ((float)j / pixel_side_length)) /
+          (img.rows - 1);
 
       Ray ray = Ray(position, bottom_left_corner.Add(horizontal.Mul(u))
                                   .Add(vertical.Mul(v))
@@ -76,5 +99,5 @@ Colour Scene::GetColour(Ray r, int depth) {
     return colour;
   }
 
-  return Colour((pixel){20, 50, 200});
+  return SkyColour(r);
 }

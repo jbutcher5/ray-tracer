@@ -18,6 +18,8 @@ public:
   static Colour Black() { return Colour(0, 0, 0); }
   static Colour White() { return Colour(1, 1, 1); }
   Colour Mul(Colour c) { return Colour(c.r * r, c.g * g, c.b * b); }
+  Colour Mul(double k) { return Colour(k * r, k * g, k * b); }
+  Colour Add(Colour c) { return Colour(c.r + r, c.g + g, c.b + b); }
 };
 
 class Image {
