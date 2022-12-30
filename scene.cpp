@@ -6,6 +6,7 @@
 #include <netpbm/ppm.h>
 
 #define MAX_RAY_DEPTH 50
+#define let auto
 
 Vector3 RandomInUnitSphere() {
   while (true) {
@@ -26,9 +27,8 @@ Scene::Scene(const std::string fp, const int cols, const int rows,
   focal_length = 1.8f;
   horizontal = Vector3(viewport_width, 0.f, 0.f);
   vertical = Vector3(0.f, viewport_height, 0.f);
-  bottom_left_corner = position.Sub(horizontal.Div(2))
-                           .Sub(vertical.Div(2))
-                           .Sub(Vector3(0.f, 0.f, focal_length));
+  bottom_left_corner = position - horizontal / 2 - vertical / 2 -
+                       Vector3(0.f, 0.f, focal_length);
 }
 
 Colour Scene::SkyColour(Ray r) {
@@ -59,9 +59,8 @@ Colour Scene::PixelColour(int pixel_col, int pixel_row) {
           ((float)(img.rows - pixel_row) + ((float)j / pixel_side_length)) /
           (img.rows - 1);
 
-      Ray ray = Ray(position, bottom_left_corner.Add(horizontal.Mul(u))
-                                  .Add(vertical.Mul(v))
-                                  .Sub(position));
+      Ray ray = Ray(position, bottom_left_corner + horizontal * u +
+                                  vertical * v - position);
 
       Colour colour = GetColour(ray);
 
@@ -79,13 +78,13 @@ Colour Scene::GetColour(Ray r, int depth) {
   if (depth > MAX_RAY_DEPTH)
     return Colour::Black();
 
-  HitRecord record = {0, Vector3(0.f, 0.f, 0.f), Vector3(0.f, 0.f, 0.f),
-                      nullptr};
+  HitRecord record;
+
   bool does_hit = false;
 
   for (Object *obj : scene) {
-    HitRecord tmp_record = {0, Vector3(0.f, 0.f, 0.f), Vector3(0.f, 0.f, 0.f),
-                            nullptr};
+    HitRecord tmp_record;
+
     if (obj->hit(r, &tmp_record)) {
       if (!does_hit) {
         does_hit = true;
@@ -97,13 +96,18 @@ Colour Scene::GetColour(Ray r, int depth) {
   }
 
   if (does_hit) {
-    Vector3 target = record.intersection.Add(record.normal)
-                         .Add(RandomInUnitSphere().Normalize());
+
+    /*
+        // Diffuse Material
+        Vector3 target = record.intersection.Add(record.normal)
+                             .Add(RandomInUnitSphere().Normalize());
+    */
+
+    let target =
+        r.direction - record.normal * 2 * record.normal.Dot(r.direction);
 
     Colour colour =
-        GetColour(Ray(record.intersection, target.Sub(record.intersection)),
-                  depth + 1)
-            .Mul(0.5);
+        GetColour(Ray(record.intersection, target), depth + 1).Mul(0.5);
 
     return colour;
   }

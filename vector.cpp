@@ -5,15 +5,33 @@
 #include <stdlib.h>
 #include <time.h>
 
-Vector3 Vector3::Add(Vector3 v) { return Vector3(x + v.x, y + v.y, z + v.z); }
+Vector3 Vector3::operator+(Vector3 v) {
+  return Vector3(x + v.x, y + v.y, z + v.z);
+}
+Vector3 Vector3::operator-(Vector3 v) { return *this + v * -1; }
+Vector3 Vector3::operator*(Vector3 v) {
+  return Vector3(x * v.x, y * v.y, z * v.z);
+}
+Vector3 Vector3::operator/(Vector3 v) {
+  return Vector3(x / v.x, y / v.y, z / v.z);
+}
 
-Vector3 Vector3::Sub(Vector3 v) { return Vector3(x - v.x, y - v.y, z - v.z); }
+void Vector3::operator+=(Vector3 v) { *this = *this + v; }
+void Vector3::operator-=(Vector3 v) { *this = *this - v; }
+void Vector3::operator*=(Vector3 v) { *this = *this * v; }
+void Vector3::operator/=(Vector3 v) { *this = *this / v; }
 
-Vector3 Vector3::Mul(float k) { return Vector3(x * k, y * k, z * k); }
+Vector3 Vector3::operator+(float k) { return Vector3(x + k, y + k, z + k); }
+Vector3 Vector3::operator-(float k) { return Vector3(x - k, y - k, z - k); }
+Vector3 Vector3::operator*(float k) { return Vector3(x * k, y * k, z * k); }
+Vector3 Vector3::operator/(float k) { return Vector3(x / k, y / k, z / k); }
 
-Vector3 Vector3::Div(float k) { return Mul(1.f / k); }
+void Vector3::operator+=(float k) { *this = *this + k; }
+void Vector3::operator-=(float k) { *this = *this - k; }
+void Vector3::operator*=(float k) { *this = *this * k; }
+void Vector3::operator/=(float k) { *this = *this / k; }
 
-Vector3 Vector3::Normalize() { return Div(Length()); }
+Vector3 Vector3::Normalize() { return *this / Length(); }
 
 Vector3 Vector3::Random(float min, float max) {
   float delta = max - min;

@@ -16,6 +16,24 @@ public:
   Vector3 Mul(float k);
   Vector3 Div(float k);
   Vector3 Normalize();
+
+  Vector3 operator+(Vector3 v);
+  void operator+=(Vector3 v);
+  Vector3 operator+(float k);
+  void operator+=(float k);
+  Vector3 operator-(Vector3 v);
+  void operator-=(Vector3 v);
+  Vector3 operator-(float k);
+  void operator-=(float k);
+  Vector3 operator*(Vector3 v);
+  void operator*=(Vector3 v);
+  Vector3 operator*(float k);
+  void operator*=(float k);
+  Vector3 operator/(Vector3 v);
+  void operator/=(Vector3 v);
+  Vector3 operator/(float k);
+  void operator/=(float k);
+
   static Vector3 Random(float min, float max);
   float Dot(Vector3 v);
   float Length();

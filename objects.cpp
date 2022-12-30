@@ -4,7 +4,7 @@
 #include <cmath>
 
 bool Sphere::hit(Ray ray, HitRecord *record) {
-  Vector3 origin = ray.position.Sub(position);
+  Vector3 origin = ray.position - position;
 
   float a = std::pow(ray.direction.Length(), 2);
   float b = origin.Dot(ray.direction);
@@ -31,7 +31,7 @@ bool Sphere::hit(Ray ray, HitRecord *record) {
   record->t = t;
   record->intersection = intersection;
   record->obj = this;
-  record->normal = intersection.Sub(position).Normalize();
+  record->normal = (intersection - position).Normalize();
 
   return true;
 }
