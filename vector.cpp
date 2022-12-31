@@ -1,49 +1,16 @@
 #include "vector.hpp"
+#include <cmath>
+#include <cstdio>
 #include <cstdlib>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-Vector3 Vector3::operator+(Vector3 v) {
-  return Vector3(x + v.x, y + v.y, z + v.z);
-}
-Vector3 Vector3::operator-(Vector3 v) { return *this + v * -1; }
-Vector3 Vector3::operator*(Vector3 v) {
-  return Vector3(x * v.x, y * v.y, z * v.z);
-}
-Vector3 Vector3::operator/(Vector3 v) {
-  return Vector3(x / v.x, y / v.y, z / v.z);
-}
-
-void Vector3::operator+=(Vector3 v) { *this = *this + v; }
-void Vector3::operator-=(Vector3 v) { *this = *this - v; }
-void Vector3::operator*=(Vector3 v) { *this = *this * v; }
-void Vector3::operator/=(Vector3 v) { *this = *this / v; }
-
-Vector3 Vector3::operator+(float k) { return Vector3(x + k, y + k, z + k); }
-Vector3 Vector3::operator-(float k) { return Vector3(x - k, y - k, z - k); }
-Vector3 Vector3::operator*(float k) { return Vector3(x * k, y * k, z * k); }
-Vector3 Vector3::operator/(float k) { return Vector3(x / k, y / k, z / k); }
-
-void Vector3::operator+=(float k) { *this = *this + k; }
-void Vector3::operator-=(float k) { *this = *this - k; }
-void Vector3::operator*=(float k) { *this = *this * k; }
-void Vector3::operator/=(float k) { *this = *this / k; }
 
 Vector3 Vector3::Normalize() { return *this / Length(); }
 
 Vector3 Vector3::Random(float min, float max) {
   float delta = max - min;
 
-  float scalar = (float)rand() / (float)RAND_MAX;
-  float x = min + delta * scalar;
-
-  scalar = (float)rand() / (float)RAND_MAX;
-  float y = min + delta * scalar;
-
-  scalar = (float)rand() / (float)RAND_MAX;
-  float z = min + delta * scalar;
+  float x = min + delta * drand48();
+  float y = min + delta * drand48();
+  float z = min + delta * drand48();
 
   return {x, y, z};
 }

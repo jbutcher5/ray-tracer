@@ -22,7 +22,7 @@ void Image::WriteImage() {
 
 void Image::SetPixel(int row, int col, Colour colour, int samples_per_pixel) {
   auto scale = 1.0 / samples_per_pixel;
-  colour = colour.Mul(scale).Clamp();
+  colour = (colour * scale).Clamp();
 
   pixels[row][col] = colour.ToPixel();
 };

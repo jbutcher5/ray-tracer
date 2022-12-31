@@ -1,7 +1,5 @@
 #pragma once
-#include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 class Vector3 {
 public:
@@ -10,29 +8,28 @@ public:
   float z;
 
   Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
-  Vector3() : x(0), y(0), z(0) {}
-  Vector3 Add(Vector3 v);
-  Vector3 Sub(Vector3 v);
-  Vector3 Mul(float k);
-  Vector3 Div(float k);
+  Vector3() {}
   Vector3 Normalize();
 
-  Vector3 operator+(Vector3 v);
-  void operator+=(Vector3 v);
-  Vector3 operator+(float k);
-  void operator+=(float k);
-  Vector3 operator-(Vector3 v);
-  void operator-=(Vector3 v);
-  Vector3 operator-(float k);
-  void operator-=(float k);
-  Vector3 operator*(Vector3 v);
-  void operator*=(Vector3 v);
-  Vector3 operator*(float k);
-  void operator*=(float k);
-  Vector3 operator/(Vector3 v);
-  void operator/=(Vector3 v);
-  Vector3 operator/(float k);
-  void operator/=(float k);
+  Vector3 operator+(Vector3 v) { return Vector3(x + v.x, y + v.y, z + v.z); }
+  Vector3 operator-(Vector3 v) { return *this + v * -1; }
+  Vector3 operator*(Vector3 v) { return Vector3(x * v.x, y * v.y, z * v.z); }
+  Vector3 operator/(Vector3 v) { return Vector3(x / v.x, y / v.y, z / v.z); }
+
+  void operator+=(Vector3 v) { *this = *this + v; }
+  void operator-=(Vector3 v) { *this = *this - v; }
+  void operator*=(Vector3 v) { *this = *this * v; }
+  void operator/=(Vector3 v) { *this = *this / v; }
+
+  Vector3 operator+(float k) { return Vector3(x + k, y + k, z + k); }
+  Vector3 operator-(float k) { return Vector3(x - k, y - k, z - k); }
+  Vector3 operator*(float k) { return Vector3(x * k, y * k, z * k); }
+  Vector3 operator/(float k) { return Vector3(x / k, y / k, z / k); }
+
+  void operator+=(float k) { *this = *this + k; }
+  void operator-=(float k) { *this = *this - k; }
+  void operator*=(float k) { *this = *this * k; }
+  void operator/=(float k) { *this = *this / k; }
 
   static Vector3 Random(float min, float max);
   float Dot(Vector3 v);
