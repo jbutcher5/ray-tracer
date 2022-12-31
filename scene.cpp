@@ -6,7 +6,6 @@
 #include <netpbm/ppm.h>
 
 #define MAX_RAY_DEPTH 50
-#define let auto
 
 Vector3 RandomInUnitSphere() {
   while (true) {
@@ -35,7 +34,7 @@ Colour Scene::SkyColour(Ray r) {
   Vector3 dir = r.direction.Normalize();
   float t = 0.5 * (dir.y + 1);
 
-  return Colour::White().Mul(1 - t).Add(Colour(0.5, 0.7, 1.0).Mul(t));
+  return Colour::White() * (1 - t) + Colour(0.5, 0.7, 1.0) * t;
 }
 
 void Scene::DrawScene() {
@@ -103,11 +102,11 @@ Colour Scene::GetColour(Ray r, int depth) {
                              .Add(RandomInUnitSphere().Normalize());
     */
 
-    let target =
+    Vector3 target =
         r.direction - record.normal * 2 * record.normal.Dot(r.direction);
 
     Colour colour =
-        GetColour(Ray(record.intersection, target), depth + 1).Mul(0.5);
+        GetColour(Ray(record.intersection, target), depth + 1) * 0.5;
 
     return colour;
   }
