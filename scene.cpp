@@ -1,20 +1,12 @@
 #include "scene.hpp"
 #include "image.hpp"
+#include "materials.hpp"
 #include "objects.hpp"
 #include "vector.hpp"
 #include <cmath>
 #include <netpbm/ppm.h>
 
 #define MAX_RAY_DEPTH 50
-
-Vector3 RandomInUnitSphere() {
-  while (true) {
-    Vector3 v = Vector3::Random(-1, 1);
-    if (v.LengthSquared() >= 1)
-      continue;
-    return v;
-  }
-}
 
 Scene::Scene(const std::string fp, const int cols, const int rows,
              const int samples_per_pixel)
@@ -94,22 +86,12 @@ Colour Scene::GetColour(Ray r, int depth) {
     }
   }
 
-  if (does_hit) {
+  if (!does_hit)
+    return SkyColour(r);
 
-    /*
-        // Diffuse Material
-        Vector3 target = record.intersection.Add(record.normal)
-                             .Add(RandomInUnitSphere().Normalize());
-    */
+  Ray ray_out;
+  record.obj->material->Scatter(&r, &record, &ray_out);
 
-    Vector3 target =
-        r.direction - record.normal * 2 * record.normal.Dot(r.direction);
-
-    Colour colour =
-        GetColour(Ray(record.intersection, target), depth + 1) * 0.5;
-
-    return colour;
-  }
-
-  return SkyColour(r);
+  Colour colour = GetColour(ray_out) * 0.5;
+  return colour;
 }

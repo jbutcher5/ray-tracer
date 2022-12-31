@@ -1,4 +1,5 @@
 #include "image.hpp"
+#include "materials.hpp"
 #include "objects.hpp"
 #include "scene.hpp"
 #include "vector.hpp"
@@ -12,10 +13,13 @@ int main() {
 
   pm_init(prog_name.c_str(), 0);
 
-  Scene scene = Scene(fp, 960, 540, 4);
+  Scene scene = Scene(fp, 1920, 1080, 16);
 
-  Sphere s = Sphere(Vector3(0.f, 0.f, -12.f), 3.f);
-  Sphere s2 = Sphere(Vector3(0.f, -103.f, -12.f), 100.f);
+  Diffuse d;
+  Mirror m;
+
+  Sphere s = Sphere(Vector3(0.f, 0.f, -12.f), 3.f, &d);
+  Sphere s2 = Sphere(Vector3(0.f, -103.f, -12.f), 100.f, &m);
 
   scene.AddObject(&s);
   scene.AddObject(&s2);
