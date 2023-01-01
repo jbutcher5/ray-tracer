@@ -19,7 +19,7 @@ int main() {
   Scene scene = Scene(fp, 1920, 1080, 16);
 
   Diffuse d;
-  Mirror m;
+  PartialDiffuse m = PartialDiffuse(0.1);
 
   Sphere s = Sphere(Vector3(0.f, 0.f, -12.f), 3.f, &d);
   Sphere s2 = Sphere(Vector3(0.f, -103.f, -12.f), 100.f, &m);
