@@ -3,6 +3,8 @@
 #include "objects.hpp"
 #include "scene.hpp"
 #include "vector.hpp"
+#include <cstdlib>
+#include <ctime>
 #include <netpbm/pm.h>
 #include <netpbm/ppm.h>
 #include <string>
@@ -12,6 +14,7 @@ int main() {
   const std::string fp = "out.ppm";
 
   pm_init(prog_name.c_str(), 0);
+  srand48(time(NULL));
 
   Scene scene = Scene(fp, 1920, 1080, 16);
 
