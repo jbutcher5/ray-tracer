@@ -12,7 +12,7 @@ Vector3 Vector3::Random(float min, float max) {
   float y = min + delta * drand48();
   float z = min + delta * drand48();
 
-  return {x, y, z};
+  return Vector3(x, y, z);
 }
 
 float Vector3::Dot(Vector3 v) { return x * v.x + y * v.y + z * v.z; }

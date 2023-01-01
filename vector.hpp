@@ -7,8 +7,8 @@ public:
   float y;
   float z;
 
-  Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
-  Vector3() {}
+  explicit Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
+  Vector3() : x(0), y(0), z(0) {}
   Vector3 Normalize();
 
   Vector3 operator+(Vector3 v) { return Vector3(x + v.x, y + v.y, z + v.z); }
