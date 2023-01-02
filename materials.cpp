@@ -9,28 +9,34 @@ Vector3 RandomInUnitSphere() {
   }
 }
 
-bool Diffuse::Scatter(Ray *ray_in, HitRecord *record, Ray *ray_out) {
+bool Diffuse::Scatter(Ray *ray_in, HitRecord *record, Colour *attenuation,
+                      Ray *ray_out) {
+  *attenuation = colour;
   *ray_out = Ray(record->intersection, record->normal + RandomInUnitSphere());
 
   return true;
 }
 
-bool Mirror::Scatter(Ray *ray_in, HitRecord *record, Ray *ray_out) {
+bool Mirror::Scatter(Ray *ray_in, HitRecord *record, Colour *attenuation,
+                     Ray *ray_out) {
   Vector3 direction =
       ray_in->direction -
       record->normal * 2 * record->normal.Dot(ray_in->direction);
 
+  *attenuation = colour;
   *ray_out = Ray(record->intersection, direction);
 
   return true;
 }
 
-bool PartialDiffuse::Scatter(Ray *ray_in, HitRecord *record, Ray *ray_out) {
+bool PartialDiffuse::Scatter(Ray *ray_in, HitRecord *record,
+                             Colour *attenuation, Ray *ray_out) {
   Vector3 diffuse = record->normal + RandomInUnitSphere();
   Vector3 mirror = ray_in->direction -
                    record->normal * 2 * record->normal.Dot(ray_in->direction);
   Vector3 direction = mirror.Lerp(diffuse, roughness);
 
+  *attenuation = colour;
   *ray_out = Ray(record->intersection, direction);
   return true;
 }

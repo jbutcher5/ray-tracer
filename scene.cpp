@@ -90,8 +90,9 @@ Colour Scene::GetColour(Ray r, int depth) {
     return SkyColour(r);
 
   Ray ray_out;
-  record.obj->material->Scatter(&r, &record, &ray_out);
+  Colour attenuation;
+  record.obj->material->Scatter(&r, &record, &attenuation, &ray_out);
 
-  Colour colour = GetColour(ray_out) * 0.5;
+  Colour colour = GetColour(ray_out) * attenuation;
   return colour;
 }

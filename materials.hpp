@@ -1,25 +1,37 @@
 #pragma once
+#include "image.hpp"
 #include "objects.hpp"
 
 class Material {
 public:
-  Material() {}
-  virtual bool Scatter(Ray *ray_in, HitRecord *record, Ray *ray_out) = 0;
+  Colour colour;
+  Material() = default;
+  Material(Colour colour) : colour(colour) {}
+  virtual bool Scatter(Ray *ray_in, HitRecord *record, Colour *attenuation,
+                       Ray *ray_out) = 0;
 };
 
 class Diffuse : public Material {
-  bool Scatter(Ray *ray_in, HitRecord *record, Ray *ray_out);
+public:
+  Diffuse(Colour colour) : Material(colour) {}
+  bool Scatter(Ray *ray_in, HitRecord *record, Colour *attenuation,
+               Ray *ray_out);
 };
 
 class Mirror : public Material {
-  bool Scatter(Ray *ray_in, HitRecord *record, Ray *ray_out);
+public:
+  Mirror(Colour colour) : Material(colour) {}
+  bool Scatter(Ray *ray_in, HitRecord *record, Colour *attenuation,
+               Ray *ray_out);
 };
 
 class PartialDiffuse : public Material {
   float roughness;
 
 public:
-  PartialDiffuse() {}
-  PartialDiffuse(float roughness) : roughness(roughness) {}
-  bool Scatter(Ray *ray_in, HitRecord *record, Ray *ray_out);
+  PartialDiffuse() = default;
+  PartialDiffuse(float roughness, Colour colour)
+      : roughness(roughness), Material(colour) {}
+  bool Scatter(Ray *ray_in, HitRecord *record, Colour *attenuation,
+               Ray *ray_out);
 };

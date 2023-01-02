@@ -8,7 +8,8 @@ public:
   double r;
   double g;
   double b;
-  Colour(double r, double g, double b) : r(r), g(g), b(b) {}
+  Colour() : r(0), g(0), b(0) {}
+  explicit Colour(double r, double g, double b) : r(r), g(g), b(b) {}
   Colour(pixel p)
       : Colour((double)p.r / PIXVAL_LIMIT, (double)p.g / PIXVAL_LIMIT,
                (double)p.b / PIXVAL_LIMIT) {}
