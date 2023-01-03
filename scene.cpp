@@ -30,6 +30,7 @@ Colour Scene::SkyColour(Ray r) {
 }
 
 void Scene::DrawScene() {
+#pragma omp parallel for schedule(dynamic, 1)
   for (int pixel_col = 0; pixel_col < img.columns; pixel_col++)
     for (int pixel_row = 0; pixel_row < img.rows; pixel_row++) {
       Colour colour = PixelColour(pixel_col, pixel_row);
