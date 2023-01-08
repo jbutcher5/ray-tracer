@@ -6,7 +6,7 @@
 #include <cmath>
 #include <netpbm/ppm.h>
 
-#define MAX_RAY_DEPTH 50
+#define MAX_RAY_DEPTH 5
 
 Scene::Scene(const std::string fp, const int cols, const int rows,
              const int samples_per_pixel)
@@ -94,6 +94,6 @@ Colour Scene::GetColour(Ray r, int depth) {
   Colour attenuation;
   record.obj->material->Scatter(&r, &record, &attenuation, &ray_out);
 
-  Colour colour = GetColour(ray_out) * attenuation;
+  Colour colour = GetColour(ray_out, depth + 1) * attenuation;
   return colour;
 }

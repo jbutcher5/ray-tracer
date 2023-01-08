@@ -50,8 +50,6 @@ class Triangle : public Object {
 public:
   Vector3 *vertices;
   Triangle(Vector3 p, Vector3 *vertices, Material *material)
-      : Object(p, material) {
-    this->vertices = vertices;
-  }
+      : Object(p, material), vertices(vertices) {}
   bool hit(Ray ray, HitRecord *record);
 };
