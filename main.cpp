@@ -3,6 +3,7 @@
 #include "objects.hpp"
 #include "scene.hpp"
 #include "vector.hpp"
+#include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <netpbm/pm.h>
@@ -28,10 +29,17 @@ int main() {
   Sphere s3 = Sphere(Vector3(-6.f, -0.1f, -12.f), 3.f, &left);
   Sphere s4 = Sphere(Vector3(0.f, -103.f, -12.f), 100.f, &ground);
 
+  Vector3 vertices[3] = {Vector3(-6.f, -2.f, -12.f), Vector3(6.f, -2.f, -12.f),
+                         Vector3(0.f, 9.f, -12.f)};
+
+  Triangle t1 = Triangle(Vector3(0, 0, -12.f), vertices, &centre);
+
   scene.AddObject(&s);
   scene.AddObject(&s2);
   scene.AddObject(&s3);
   scene.AddObject(&s4);
+
+  scene.AddObject(&t1);
 
   scene.DrawScene();
   scene.WriteImage();
