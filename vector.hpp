@@ -34,6 +34,7 @@ public:
   static Vector3 Random(float min, float max);
   Vector3 Lerp(Vector3 v, float scale) { return *this + (v - *this) * scale; }
   float Dot(Vector3 v);
+  Vector3 Cross(Vector3 v);
   float Length();
   float LengthSquared();
   char *Debug();

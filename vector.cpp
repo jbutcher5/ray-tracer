@@ -17,6 +17,10 @@ Vector3 Vector3::Random(float min, float max) {
 
 float Vector3::Dot(Vector3 v) { return x * v.x + y * v.y + z * v.z; }
 
+Vector3 Vector3::Cross(Vector3 v) {
+  return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
+}
+
 float Vector3::Length() { return std::sqrt(LengthSquared()); }
 
 float Vector3::LengthSquared() { return x * x + y * y + z * z; }
