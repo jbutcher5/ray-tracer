@@ -6,7 +6,7 @@
 #include <cmath>
 #include <netpbm/ppm.h>
 
-#define MAX_RAY_DEPTH 5
+#define MAX_RAY_DEPTH 50
 
 Scene::Scene(const std::string fp, const int cols, const int rows,
              const int samples_per_pixel)

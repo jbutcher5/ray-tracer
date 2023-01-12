@@ -32,7 +32,7 @@ int main() {
   Vector3 vertices[3] = {Vector3(-6.f, -2.f, -12.f), Vector3(6.f, -2.f, -12.f),
                          Vector3(0.f, 9.f, -12.f)};
 
-  Triangle t1 = Triangle(Vector3(0, 0, -12.f), vertices, &centre);
+  Triangle t1 = Triangle(vertices, &centre);
 
   scene.AddObject(&s);
   scene.AddObject(&s2);
