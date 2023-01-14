@@ -12,16 +12,19 @@ CFLAGS  = -I$(INCLUDE) -std=c++17 -fopenmp
 LDLIBS  = -lomp -lnetpbm -lm
 
 $(OBJ)/%.o: $(SRC)/%.cpp
-	clang++ -c $(CFLAGS) -g $< -o $@
+	@mkdir -p "$(@D)"
+	@echo "Compiling: $< -> $@"
+	@clang++ -c $(CFLAGS) -g $< -o $@
 
-$(EXE): ${OBJS}
-	clang++ $^ -g $(LDLIBS) -o $@
+$(EXE): $(OBJS)
+	@echo "Building final executable: $@"
+	@clang++ $^ -g $(LDLIBS) -o $@
 
 $(OBJ):
 	mkdir -p $@
 
-format: ${SRC}
+format: $(SRC)
 	clang-format $^ -i
 
 clean:
-	rm -rf $(OBJ)
+	rm -rf $(OBJ) $(EXE)

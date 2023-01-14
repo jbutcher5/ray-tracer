@@ -1,4 +1,4 @@
-#include "materials.hpp"
+#include "objects/materials.hpp"
 
 Vector3 RandomInUnitSphere() {
   while (true) {

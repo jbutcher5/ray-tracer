@@ -1,8 +1,8 @@
-#include "image.hpp"
-#include "materials.hpp"
-#include "objects.hpp"
-#include "scene.hpp"
-#include "vector.hpp"
+#include "image/image.hpp"
+#include "math_utils/vector.hpp"
+#include "objects/materials.hpp"
+#include "objects/objects.hpp"
+#include "scene/scene.hpp"
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>

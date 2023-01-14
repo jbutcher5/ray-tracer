@@ -1,7 +1,7 @@
 #include "objects.hpp"
-#include "math.h"
-#include "math_utils.hpp"
+#include "math_utils/math_utils.hpp"
 #include <cmath>
+#include <math.h>
 
 #define EPSILON 0.001f
 

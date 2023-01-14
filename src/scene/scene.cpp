@@ -1,8 +1,8 @@
 #include "scene.hpp"
-#include "image.hpp"
-#include "materials.hpp"
-#include "objects.hpp"
-#include "vector.hpp"
+#include "image/image.hpp"
+#include "math_utils/vector.hpp"
+#include "objects/materials.hpp"
+#include "objects/objects.hpp"
 #include <cmath>
 #include <netpbm/ppm.h>
 

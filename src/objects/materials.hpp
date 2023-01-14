@@ -1,6 +1,6 @@
 #pragma once
-#include "image.hpp"
-#include "objects.hpp"
+#include "image/image.hpp"
+#include "objects/objects.hpp"
 
 class Material {
 public:

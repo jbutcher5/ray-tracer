@@ -1,8 +1,8 @@
 #pragma once
 
-#include "image.hpp"
-#include "objects.hpp"
-#include "vector.hpp"
+#include "image/image.hpp"
+#include "math_utils/vector.hpp"
+#include "objects/objects.hpp"
 #include <vector>
 
 class Scene {

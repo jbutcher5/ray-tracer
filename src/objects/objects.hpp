@@ -1,5 +1,5 @@
 #pragma once
-#include "vector.hpp"
+#include "math_utils/vector.hpp"
 #include <cstdlib>
 #include <netpbm/ppm.h>
 
