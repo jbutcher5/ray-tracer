@@ -1,3 +1,3 @@
 *.o
-*.ppm
+out.ppm
 ray-tracer

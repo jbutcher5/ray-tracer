@@ -1,14 +1,27 @@
-SRC = main.cpp math_utils.cpp vector.cpp objects.cpp image.cpp scene.cpp materials.cpp
-OBJ = ${SRC:.cpp=.o}
+CC      = clang++
+INCLUDE = src
+OBJ     = build
+SRC     = src
+SRCS    = $(SRC)/main.cpp
+SRCS    += $(wildcard $(SRC)/*.cpp)
+SRCS    += $(wildcard $(SRC)/*/*.cpp)
+SRCS    += $(wildcard $(SRC)/*/*/*.cpp)
+OBJS    = $(patsubst $(SRC)/%.cpp,$(OBJ)/%.o,$(SRCS))
+EXE     = rt
+CFLAGS  = -I$(INCLUDE) -std=c++17 -fopenmp
+LDLIBS  = -lomp -lnetpbm -lm
 
-%.o: %.cpp
-	clang++ -c -fopenmp -g $< -o $@
+$(OBJ)/%.o: $(SRC)/%.cpp
+	clang++ -c $(CFLAGS) -g $< -o $@
 
-ray-tracer: ${OBJ}
-	clang++ $^ -g -lomp -lnetpbm -lm -o $@
+$(EXE): ${OBJS}
+	clang++ $^ -g $(LDLIBS) -o $@
+
+$(OBJ):
+	mkdir -p $@
 
 format: ${SRC}
 	clang-format $^ -i
 
 clean:
-	rm -p *.o
+	rm -rf $(OBJ)
