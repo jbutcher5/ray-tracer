@@ -63,7 +63,10 @@ bool Triangle::hit(Ray ray, HitRecord *record) {
   if (v < 0.0 || u + v > 1.0)
     return false;
 
-  float t = f * edges[2].Dot(q);
+  float t = f * edges[1].Dot(q);
+
+  if (t < EPSILON)
+    return false;
 
   Vector3 intersection = ray.At(t);
 
