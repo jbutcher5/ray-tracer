@@ -4,7 +4,6 @@
 #include "objects/objects.hpp"
 #include "objects/parse_obj.hpp"
 #include "scene/scene.hpp"
-#include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <netpbm/pm.h>
@@ -18,9 +17,9 @@ int main() {
   pm_init(prog_name.c_str(), 0);
   srand48(time(NULL));
 
-  Scene scene = Scene(fp, 1920, 1080, 1);
+  Scene scene = Scene(fp, 1920, 1080, 1, true);
 
-  std::vector<Object *> teapot = LoadObj("teapot.obj", Vector3(0, 1.f, -3.f));
+  std::vector<Object *> teapot = LoadObj("teapot.obj", Vector3(0, 0, -3.f));
   for (auto triangle : teapot)
     scene.AddObject(triangle);
 

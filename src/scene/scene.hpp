@@ -21,10 +21,11 @@ class Scene {
   Vector3 bottom_left_corner;
 
   std::vector<Object *> scene;
+  bool debug;
 
 public:
   Scene(const std::string fp, const int cols, const int rows,
-        const int samples_per_pixel);
+        const int samples_per_pixel, bool debug);
   void DrawScene();
   void WriteImage() { img.WriteImage(); }
   void AddObject(Object *obj) { scene.push_back(obj); }

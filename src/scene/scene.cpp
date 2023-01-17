@@ -9,9 +9,10 @@
 #define MAX_RAY_DEPTH 50
 
 Scene::Scene(const std::string fp, const int cols, const int rows,
-             const int samples_per_pixel)
+             const int samples_per_pixel, bool debug)
     : img(Image(fp, cols, rows)) {
   this->samples_per_pixel = samples_per_pixel;
+  this->debug = debug;
   aspect_ratio = (float)cols / rows;
   viewport_height = 2.f;
   viewport_width = aspect_ratio * viewport_height;
@@ -90,10 +91,18 @@ Colour Scene::GetColour(Ray r, int depth) {
   if (!does_hit)
     return SkyColour(r);
 
-  Ray ray_out;
-  Colour attenuation;
-  record.obj->material->Scatter(&r, &record, &attenuation, &ray_out);
+  Colour colour;
 
-  Colour colour = GetColour(ray_out, depth + 1) * attenuation;
+  if (debug) {
+    Vector3 c = record.normal + 1 / 2.f;
+    colour = Colour(c.x, c.y, c.z);
+  } else {
+    Ray ray_out;
+    Colour attenuation;
+    record.obj->material->Scatter(&r, &record, &attenuation, &ray_out);
+
+    colour = GetColour(ray_out, depth + 1) * attenuation;
+  }
+
   return colour;
 }
