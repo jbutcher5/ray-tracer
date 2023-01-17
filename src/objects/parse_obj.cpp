@@ -7,7 +7,7 @@
 #include <string.h>
 #include <vector>
 
-#define PREFIX(pre, str) (strncmp((pre), (str), strlen((str))) == 0)
+#define PREFIX(pre, str) (strncmp((pre), (str), strlen((pre))) == 0)
 
 /* Load object file data into mesh */
 std::vector<Object *> LoadObj(const char *fname) {
