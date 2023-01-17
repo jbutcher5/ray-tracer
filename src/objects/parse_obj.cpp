@@ -10,8 +10,9 @@
 #define PREFIX(pre, str) (strncmp((pre), (str), strlen((pre))) == 0)
 
 /* Load object file data into mesh */
-std::vector<Object *> LoadObj(const char *fname) {
+std::vector<Object *> LoadObj(const char *fname, Vector3 offset) {
   FILE *f = fopen(fname, "r");
+
   char buf[128];
 
   std::vector<Vector3> vertex_positions;
@@ -37,11 +38,9 @@ std::vector<Object *> LoadObj(const char *fname) {
       sscanf(buf, "f %d/%d/%d %d/%d/%d %d/%d/%d", vi, ti, ni, vi + 1, ti + 1,
              ni + 1, vi + 2, ti + 2, ni + 2);
 
-      Vector3 *points = new Vector3[3]{vertex_positions[vi[0] - 1],
-                                       vertex_positions[vi[1] - 1],
-                                       vertex_positions[vi[2] - 1]};
-
-      Triangle *t = new Triangle(points, new Diffuse(Colour(0.7f, 0.3f, 0.3f)));
+      Triangle *t = new Triangle(
+          vertex_positions[vi[0] - 1] + offset, vertex_positions[vi[1] - 1] + offset,
+          vertex_positions[vi[2] - 1] + offset, new Diffuse(Colour(0.7f, 0.4f, 0.3f)));
 
       faces.push_back(t);
     }

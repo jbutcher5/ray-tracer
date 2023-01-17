@@ -2,4 +2,4 @@
 #include "objects/objects.hpp"
 #include <vector>
 
-std::vector<Object *> LoadObj(const char *fname);
+std::vector<Object *> LoadObj(const char *fname, Vector3 offset);

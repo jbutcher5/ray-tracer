@@ -48,9 +48,10 @@ public:
 
 class Triangle : public Object {
 public:
-  Vector3 *vertices;
-  Triangle(Vector3 *vertices, Material *material)
-      : Object((vertices[0] + vertices[1] + vertices[2]) / 3, material),
-        vertices(vertices) {}
+  Vector3 v1;
+  Vector3 v2;
+  Vector3 v3;
+  Triangle(Vector3 v1, Vector3 v2, Vector3 v3, Material *material)
+      : Object((v1 + v2 + v3) / 3, material), v1(v1), v2(v2), v3(v3) {}
   bool hit(Ray ray, HitRecord *record);
 };

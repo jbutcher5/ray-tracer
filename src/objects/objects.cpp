@@ -40,7 +40,7 @@ bool Sphere::hit(Ray ray, HitRecord *record) {
 
 bool Triangle::hit(Ray ray, HitRecord *record) {
 
-  Vector3 edges[2] = {vertices[1] - vertices[0], vertices[2] - vertices[0]};
+  Vector3 edges[2] = {v2 - v1, v3 - v1};
   Vector3 h, s, q;
   float a, f, u, v;
 
@@ -51,7 +51,7 @@ bool Triangle::hit(Ray ray, HitRecord *record) {
     return false;
 
   f = 1.0 / a;
-  s = ray.position - vertices[0];
+  s = ray.position - v1;
   u = f * s.Dot(h);
 
   if (u < 0.0 || u > 1.0)
