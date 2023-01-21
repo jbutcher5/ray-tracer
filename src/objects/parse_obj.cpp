@@ -39,8 +39,11 @@ std::vector<Object *> LoadObj(const char *fname, Vector3 offset) {
              ni + 1, vi + 2, ti + 2, ni + 2);
 
       Triangle *t = new Triangle(
-          vertex_positions[vi[0] - 1] + offset, vertex_positions[vi[1] - 1] + offset,
-          vertex_positions[vi[2] - 1] + offset, new Diffuse(Colour(0.7f, 0.4f, 0.3f)));
+          vertex_positions[vi[0] - 1] + offset,
+          vertex_positions[vi[1] - 1] + offset,
+          vertex_positions[vi[2] - 1] + offset, vertex_normals[ni[0] - 1],
+          vertex_normals[ni[1] - 1], vertex_normals[ni[2] - 1],
+          new Diffuse(Colour(0.7f, 0.4f, 0.3f)));
 
       faces.push_back(t);
     }

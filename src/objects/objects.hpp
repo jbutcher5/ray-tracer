@@ -48,10 +48,23 @@ public:
 
 class Triangle : public Object {
 public:
-  Vector3 v1;
-  Vector3 v2;
-  Vector3 v3;
+  Vector3 p[3];
+  Vector3 n[3];
   Triangle(Vector3 v1, Vector3 v2, Vector3 v3, Material *material)
-      : Object((v1 + v2 + v3) / 3, material), v1(v1), v2(v2), v3(v3) {}
+      : Object((v1 + v2 + v3) / 3, material) {
+    p[0] = v1;
+    p[1] = v2;
+    p[2] = v3;
+  }
+  Triangle(Vector3 v1, Vector3 v2, Vector3 v3, Vector3 vn1, Vector3 vn2,
+           Vector3 vn3, Material *material)
+      : Object((v1 + v2 + v3) / 3, material) {
+    p[0] = v1;
+    p[1] = v2;
+    p[2] = v3;
+    n[0] = vn1;
+    n[1] = vn2;
+    n[2] = vn3;
+  }
   bool hit(Ray ray, HitRecord *record);
 };

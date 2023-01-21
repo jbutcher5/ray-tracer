@@ -1,5 +1,6 @@
 #include "objects.hpp"
 #include "math_utils/math_utils.hpp"
+#include "math_utils/vector.hpp"
 #include <cmath>
 #include <math.h>
 
@@ -40,9 +41,9 @@ bool Sphere::hit(Ray ray, HitRecord *record) {
 
 bool Triangle::hit(Ray ray, HitRecord *record) {
 
-  Vector3 edges[2] = {v2 - v1, v3 - v1};
+  Vector3 edges[2] = {p[1] - p[0], p[2] - p[0]};
   Vector3 h, s, q;
-  float a, f, u, v;
+  float a, f, u, v, w;
 
   h = ray.direction.Cross(edges[1]);
   a = edges[0].Dot(h);
@@ -51,16 +52,16 @@ bool Triangle::hit(Ray ray, HitRecord *record) {
     return false;
 
   f = 1.0 / a;
-  s = ray.position - v1;
-  u = f * s.Dot(h);
+  s = ray.position - p[0];
+  v = f * s.Dot(h);
 
-  if (u < 0.0 || u > 1.0)
+  if (v < 0.0 || v > 1.0)
     return false;
 
   q = s.Cross(edges[0]);
-  v = f * ray.direction.Dot(q);
+  w = f * ray.direction.Dot(q);
 
-  if (v < 0.0 || u + v > 1.0)
+  if (w < 0.0 || v + w > 1.0)
     return false;
 
   float t = f * edges[1].Dot(q);
@@ -68,12 +69,16 @@ bool Triangle::hit(Ray ray, HitRecord *record) {
   if (t < EPSILON)
     return false;
 
+  u = 1 - v - w;
+
   Vector3 intersection = ray.At(t);
 
   record->t = t;
   record->intersection = intersection;
   record->obj = this;
-  record->normal = edges[0].Cross(edges[1]).Normalize();
+  record->normal = Vector3(n[0].x * u + n[1].x * v + n[2].x * w,
+                           n[0].y * u + n[1].y * v + n[2].y * w,
+                           n[0].z * u + n[1].z * v + n[2].z * w);
 
   return true;
 }
